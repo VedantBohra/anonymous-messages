@@ -6,10 +6,9 @@ import type { NextRequest } from 'next/server'
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { messageid: string } }
+  { params }: { params: Record<string, string> }
 ) {
   const session = await getServerSession(authOptions)
-  const user = session?.user as User
   const messageid = params.messageid
 
   if (!session || !session.user) {
@@ -25,7 +24,7 @@ export async function DELETE(
   try {
     const deletedMessage = await prisma.message.delete({
       where: {
-        id: parseInt(messageid),
+        id: parseInt(messageid), // messageid will still be a string here
       },
     })
 
@@ -47,7 +46,7 @@ export async function DELETE(
       { status: 200 }
     )
   } catch (error) {
-    console.error("Error deleting message:", error)
+    console.error("Error deleting message:", error); // Log the actual error for debugging
     return Response.json(
       {
         success: false,
