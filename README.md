@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🕵️‍♂️ Anonymous Messages App
 
-## Getting Started
+Live demo: [https://anonymous-messages-eta.vercel.app/](https://anonymous-messages-eta.vercel.app/)
 
-First, run the development server:
+A simple and elegant Next.js app where users can receive completely anonymous feedback from anyone. Users can toggle whether they want to accept messages and share their personal link — no login required for senders.
+
+---
+
+## 🚀 Getting Started
+
+### Development
+
+To start the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Production
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To build the app for production:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🌐 Website Flow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Users log in using **NextAuth**.
+2. Upon login, they are given a **unique sharable link**.
+3. This link can be shared with anyone — **even if they're not registered**.
+4. Visitors can send **anonymous messages** via that link.
+5. Users can **enable/disable** message reception.
+6. AI-powered suggestions (via Cohere) are optionally shown on the anonymous message page.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🌱 Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a `.env` file in the root of your project with the following keys:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+DATABASE_URL=your_postgres_connection_url
+RESEND_API_KEY=your_resend_api_key
+NEXTAUTH_SECRET=your_nextauth_secret
+COHERE_API_KEY=your_cohere_api_key
+```
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js 13+** (App Router)
+- **Tailwind CSS**
+- **Prisma ORM**
+- **PostgreSQL**
+- **NextAuth.js** for authentication
+- **Resend** for email (optional)
+- **Cohere API** for AI-based suggestions
+- **Vercel** for deployment
+
+---
+
+## 🙌 Acknowledgements
+
+Built with ❤️ to help users receive honest feedback — anonymously and securely.
