@@ -6,11 +6,11 @@ import type { NextRequest } from 'next/server'
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { messageid: string } }
+  { params }: { params: { messageid: string } } 
 ) {
   const session = await getServerSession(authOptions)
   const user = session?.user as User
-  const messageid = context.params.messageid
+  const messageid = params.messageid 
 
   if (!session || !session.user) {
     return Response.json(
@@ -47,6 +47,7 @@ export async function DELETE(
       { status: 200 }
     )
   } catch (error) {
+    console.error("Error deleting message:", error); // Log the actual error for debugging
     return Response.json(
       {
         success: false,
