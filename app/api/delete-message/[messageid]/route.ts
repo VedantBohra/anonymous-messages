@@ -4,7 +4,6 @@ import prisma from '@/lib/prisma'
 import { User } from 'next-auth'
 import type { NextRequest } from 'next/server'
 
-
 export async function DELETE(
   request: NextRequest,
   context: { params: { messageid: string } }
