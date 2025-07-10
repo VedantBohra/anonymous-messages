@@ -3,13 +3,10 @@ import { authOptions } from '../../auth/[...nextauth]/options'
 import prisma from '@/lib/prisma'
 import { User } from 'next-auth'
 
-export async function DELETE(
-  request: Request, 
-  { params }: { params: { messageid: string } } 
-) {
+export async function DELETE({params} : {params : {messageid : string}}) {
   const session = await getServerSession(authOptions)
   const user = session?.user as User
-  const messageid = params.messageid
+  const messageid = params.messageid 
 
   if (!session || !session.user) {
     return Response.json(
