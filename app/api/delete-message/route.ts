@@ -1,13 +1,12 @@
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/options'
+import { authOptions } from '../auth/[...nextauth]/options'
 import prisma from '@/lib/prisma'
 import { User } from 'next-auth'
 import { NextRequest } from 'next/server'
 
-export async function DELETE(req: NextRequest ,{params} : {params : {messageid : string}}) {
+export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions)
   const user = session?.user as User
-  const messageid = params.messageid 
 
   if (!session || !session.user) {
     return Response.json(
@@ -16,6 +15,19 @@ export async function DELETE(req: NextRequest ,{params} : {params : {messageid :
         message: 'Error verifying user',
       },
       { status: 401 }
+    )
+  }
+
+  const url = new URL(req.url)
+  const messageid = url.searchParams.get('id')
+
+  if (!messageid) {
+    return Response.json(
+      {
+        success: false,
+        message: 'Missing id parameter',
+      },
+      { status: 400 }
     )
   }
 
@@ -44,7 +56,7 @@ export async function DELETE(req: NextRequest ,{params} : {params : {messageid :
       { status: 200 }
     )
   } catch (error) {
-    console.error("Error deleting message:", error);
+    console.error("Error deleting message:", error)
     return Response.json(
       {
         success: false,
