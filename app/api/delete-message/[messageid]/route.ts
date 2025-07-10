@@ -2,13 +2,13 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../../auth/[...nextauth]/options'
 import prisma from '@/lib/prisma'
 import { User } from 'next-auth'
-import type { NextRequest } from 'next/server'
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Record<string, string> }
+  request: Request, 
+  { params }: { params: { messageid: string } } 
 ) {
   const session = await getServerSession(authOptions)
+  const user = session?.user as User
   const messageid = params.messageid
 
   if (!session || !session.user) {
@@ -24,7 +24,7 @@ export async function DELETE(
   try {
     const deletedMessage = await prisma.message.delete({
       where: {
-        id: parseInt(messageid), // messageid will still be a string here
+        id: parseInt(messageid),
       },
     })
 
@@ -46,7 +46,7 @@ export async function DELETE(
       { status: 200 }
     )
   } catch (error) {
-    console.error("Error deleting message:", error); // Log the actual error for debugging
+    console.error("Error deleting message:", error);
     return Response.json(
       {
         success: false,
